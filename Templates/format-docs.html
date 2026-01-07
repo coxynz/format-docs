@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AV Project Specification Brief</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --bg-light: #f8f9fa;
+            --border-color: #dee2e6;
+            --text-main: #333;
+            --text-muted: #666;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: #fff;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid var(--border-color);
+            padding: 50px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 24pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-meta {
+            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 14pt;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .question-label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+        }
+
+        .instruction-text {
+            font-size: 0.9em;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .response-box {
+            background-color: #fff;
+            padding: 10px 15px;
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 20px;
+            min-height: 20px;
+            white-space: pre-wrap; /* Preserves line breaks from form data */
+        }
+
+        .file-placeholder {
+            border: 2px dashed var(--border-color);
+            padding: 20px;
+            text-align: center;
+            color: var(--text-muted);
+            border-radius: 4px;
+        }
+
+        @media print {
+            body { padding: 0; }
+            .container { 
+                border: none; 
+                box-shadow: none; 
+                max-width: 100%;
+                width: 100%;
+            }
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Project Specification Brief</h1>
+        <span>Generated Report</span>
+    </header>
+
+    <!-- 1. Client & 2. Date -->
+    <div class="project-meta">
+        <div>
+            <span class="question-label">Client / Project Name:</span>
+            <div class="response-box">[INSERT_CLIENT_NAME]</div>
+        </div>
+        <div>
+            <span class="question-label">Desired Completion Date:</span>
+            <div class="response-box">[INSERT_DATE]</div>
+        </div>
+    </div>
+
+    <!-- 3. Room Details -->
+    <div class="section">
+        <div class="section-title">Scope & Workload</div>
+        <span class="question-label">Room Details</span>
+        <span class="instruction-text">Room types and quantity of each:</span>
+        <div class="response-box">[INSERT_ROOM_DETAILS]</div>
+    </div>
+
+    <!-- 4. Functional Requirements -->
+    <div class="section">
+        <div class="section-title">Operational Requirements</div>
+        <span class="question-label">Functional Requirements</span>
+        <span class="instruction-text">How the client intends to use these spaces (functional/non-technical outcomes):</span>
+        <div class="response-box">[INSERT_FUNCTIONAL_REQUIREMENTS]</div>
+    </div>
+
+    <!-- 5. Control System -->
+    <div class="section">
+        <span class="question-label">Control System Requirements</span>
+        <span class="instruction-text">Wall-mounted panels, mobile interface, specific automation:</span>
+        <div class="response-box">[INSERT_CONTROL_SYSTEM]</div>
+    </div>
+
+    <!-- 6. Brands & 7. Integration -->
+    <div class="section">
+        <div class="section-title">Equipment & Standards</div>
+        <span class="question-label">Preferred Brands or Technology Standards</span>
+        <div class="response-box">[INSERT_BRANDS_STANDARDS]</div>
+
+        <span class="question-label">Existing Equipment Integration</span>
+        <span class="instruction-text">Equipment to be reused or supplied by client:</span>
+        <div class="response-box">[INSERT_EXISTING_INTEGRATION]</div>
+    </div>
+
+    <!-- 8. Photos & 9. Drawings -->
+    <div class="section">
+        <div class="section-title">Site Documentation</div>
+        <span class="question-label">Site Photos & Drawings</span>
+        <div class="file-placeholder">
+            [LIST_UPLOADED_FILES_OR_LINKS_HERE]
+        </div>
+    </div>
+
+    <!-- 10. Network & 11. Infrastructure -->
+    <div class="section">
+        <div class="section-title">Technical Infrastructure</div>
+        <span class="question-label">Network Strategy:</span>
+        <div class="response-box">[INSERT_CLIENT_NETWORK_OR_DEDICATED_AV]</div>
+
+        <span class="question-label">Cabling & Infrastructure</span>
+        <span class="instruction-text">Cabling responsibility and rack location requirements:</span>
+        <div class="response-box">[INSERT_CABLING_DETAILS]</div>
+    </div>
+
+    <!-- 12. Budget -->
+    <div class="section">
+        <div class="section-title">Commercials & Constraints</div>
+        <span class="question-label">Budgetary Estimates</span>
+        <div class="response-box">[INSERT_BUDGET]</div>
+    </div>
+
+    <!-- 13. Constraints -->
+    <div class="section">
+        <span class="question-label">Site Constraints</span>
+        <span class="instruction-text">Heritage building, restricted access times, asbestos, etc.:</span>
+        <div class="response-box">[INSERT_SITE_CONSTRAINTS]</div>
+    </div>
+
+    <footer style="margin-top: 50px; font-size: 0.8em; color: #999; text-align: center;">
+        End of Document - Confidential Project Information
+    </footer>
+</div>
+
+</body>
+</html>

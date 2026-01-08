@@ -123,12 +123,12 @@ const Generator = {
                         margin: 0 auto;
                     }
                     header {
-                        border-bottom: 3px solid #2c3e50;
+                        border-bottom: 3px solid #C41230;
                         margin-bottom: 30px;
                         padding-bottom: 10px;
                     }
                     h1 {
-                        color: #2c3e50;
+                        color: #C41230;
                         font-size: 24pt;
                         text-transform: uppercase;
                         letter-spacing: 1px;
@@ -143,7 +143,7 @@ const Generator = {
                     }
                     .section-title {
                         font-size: 14pt;
-                        color: #2c3e50;
+                        color: #C41230;
                         border-bottom: 1px solid #dee2e6;
                         margin-bottom: 10px;
                         padding-bottom: 5px;
@@ -151,7 +151,7 @@ const Generator = {
                     }
                     .question-label {
                         font-weight: 600;
-                        color: #34495e;
+                        color: #2c2c2c;
                         display: block;
                         margin-bottom: 5px;
                     }
@@ -164,7 +164,7 @@ const Generator = {
                     .response-box {
                         background-color: #fff;
                         padding: 10px 15px;
-                        border-left: 4px solid #3498db;
+                        border-left: 4px solid #C41230;
                         margin-bottom: 20px;
                         min-height: 20px;
                     }
@@ -173,12 +173,6 @@ const Generator = {
                         padding: 20px;
                         text-align: center;
                         color: #666;
-                    }
-                    footer {
-                        margin-top: 50px;
-                        font-size: 0.8em;
-                        color: #999;
-                        text-align: center;
                     }
                 </style>
             </head>

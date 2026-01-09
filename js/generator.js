@@ -20,14 +20,12 @@ const Generator = {
         'Site Constraints': '[INSERT_SITE_CONSTRAINTS]'
     },
 
-    // Special mapping for file placeholders (combines multiple columns)
-    fileMappings: {
-        columns: ['Site Photos', 'Client Drawings'],
-        placeholder: '[LIST_UPLOADED_FILES_OR_LINKS_HERE]'
-    },
 
     // Template HTML (loaded from file)
     template: null,
+
+    // Logo Base64 (cached for DOCX embedding)
+    logoBase64: null,
 
     /**
      * Load template from file or URL
@@ -40,9 +38,36 @@ const Generator = {
                 throw new Error(`Failed to load template: ${response.status}`);
             }
             this.template = await response.text();
+
+            // Also load logo as base64 for DOCX embedding
+            await this.loadLogoAsBase64();
+
             return this.template;
         } catch (error) {
             throw new Error(`Template loading failed: ${error.message}`);
+        }
+    },
+
+    /**
+     * Load logo and convert to base64 for embedding in DOCX
+     */
+    async loadLogoAsBase64() {
+        try {
+            const logoPath = 'Images/VEGA-logo_with-slogan-removebg-preview.png';
+            const response = await fetch(logoPath);
+            if (!response.ok) return;
+
+            const blob = await response.blob();
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    this.logoBase64 = reader.result;
+                    resolve(this.logoBase64);
+                };
+                reader.readAsDataURL(blob);
+            });
+        } catch (error) {
+            console.warn('Failed to load logo for base64 embedding:', error);
         }
     },
 
@@ -74,14 +99,6 @@ const Generator = {
             filledHtml = filledHtml.split(placeholder).join(escapedValue || placeholder);
         }
 
-        // Handle file placeholder (combine Site Photos and Client Drawings)
-        const fileValues = this.fileMappings.columns
-            .map(col => rowData[col])
-            .filter(val => val && val.trim())
-            .join('\n');
-
-        const fileContent = fileValues || 'No files uploaded';
-        filledHtml = filledHtml.split(this.fileMappings.placeholder).join(this.escapeHtml(fileContent));
 
         return filledHtml;
     },
@@ -177,7 +194,7 @@ const Generator = {
                 </style>
             </head>
             <body>
-                ${this.extractBodyContent(filledHtml)}
+                ${this.prepareHtmlForDocx(filledHtml)}
             </body>
             </html>
         `;
@@ -194,6 +211,25 @@ const Generator = {
         });
 
         return converted;
+    },
+
+    /**
+     * Prepare HTML for DOCX by extracting body and embedding base64 images
+     * @param {string} html 
+     * @returns {string}
+     */
+    prepareHtmlForDocx(html) {
+        let content = this.extractBodyContent(html);
+
+        // Replace logo path with base64 if available
+        if (this.logoBase64) {
+            content = content.replace(
+                /src=["']Images\/VEGA-logo_with-slogan-removebg-preview\.png["']/g,
+                `src="${this.logoBase64}"`
+            );
+        }
+
+        return content;
     },
 
     /**

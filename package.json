@@ -1,0 +1,17 @@
+{
+  "name": "format-docs",
+  "version": "1.0.0",
+  "description": "Spreadsheet to DOCX Generator",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.22.1",
+    "open": "^11.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

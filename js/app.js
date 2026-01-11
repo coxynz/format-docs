@@ -38,7 +38,8 @@ const App = {
             totalRows: document.getElementById('totalRows'),
             prevRow: document.getElementById('prevRow'),
             nextRow: document.getElementById('nextRow'),
-            generateBtn: document.getElementById('generateBtn'),
+            generateSingleBtn: document.getElementById('generateSingleBtn'),
+            generateAllBtn: document.getElementById('generateAllBtn'),
             newFileBtn: document.getElementById('newFileBtn'),
             loadingOverlay: document.getElementById('loadingOverlay'),
             loadingText: document.getElementById('loadingText'),
@@ -53,7 +54,7 @@ const App = {
      * Bind event listeners
      */
     bindEvents() {
-        const { dropZone, fileInput, prevRow, nextRow, generateBtn, newFileBtn } = this.elements;
+        const { dropZone, fileInput, prevRow, nextRow, generateSingleBtn, generateAllBtn, newFileBtn } = this.elements;
 
         // File input change
         fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
@@ -87,7 +88,8 @@ const App = {
         nextRow.addEventListener('click', () => this.navigateNext());
 
         // Action buttons
-        generateBtn.addEventListener('click', () => this.generateDocuments());
+        generateSingleBtn.addEventListener('click', () => this.generateDocuments('single'));
+        generateAllBtn.addEventListener('click', () => this.generateDocuments('all'));
         newFileBtn.addEventListener('click', () => this.reset());
 
         // Keyboard navigation
@@ -205,8 +207,9 @@ const App = {
 
     /**
      * Generate and download DOCX documents
+     * @param {'single'|'all'} scope
      */
-    async generateDocuments() {
+    async generateDocuments(scope = 'all') {
         if (!this.parsedData || !this.templateLoaded) {
             this.showToast('No data loaded or template missing', 'error');
             return;
@@ -214,7 +217,27 @@ const App = {
 
         const rows = this.parsedData.rows;
 
-        this.showLoading(`Generating document${rows.length > 1 ? 's' : ''}...`);
+        // Handle Single Document
+        if (scope === 'single') {
+            const currentRowIndex = Preview.currentIndex;
+            const row = rows[currentRowIndex];
+
+            this.showLoading('Generating document...');
+            try {
+                const doc = await Generator.generateSingle(row, currentRowIndex);
+                saveAs(doc.blob, doc.filename);
+                this.showToast('Document downloaded successfully!', 'success');
+            } catch (error) {
+                console.error('Generation error:', error);
+                this.showToast(`Generation failed: ${error.message}`, 'error');
+            } finally {
+                this.hideLoading();
+            }
+            return;
+        }
+
+        // Handle All Documents
+        this.showLoading(`Generating 1 of ${rows.length}...`);
 
         try {
             const documents = await Generator.generateAll(rows, (current, total) => {

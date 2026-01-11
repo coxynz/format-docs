@@ -120,78 +120,22 @@ const Generator = {
      * @param {string} filledHtml 
      * @returns {Blob}
      */
+    /**
+     * Generate DOCX from filled HTML
+     * @param {string} filledHtml 
+     * @returns {Blob}
+     */
     generateDocx(filledHtml) {
+        // Extract styles from the original template
+        const styles = this.extractStyles(this.template);
+
         // Wrap in proper document structure for html-docx-js
         const fullHtml = `
             <!DOCTYPE html>
             <html>
             <head>
                 <meta charset="UTF-8">
-                <style>
-                    /* Inline styles for DOCX compatibility */
-                    body {
-                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                        line-height: 1.6;
-                        color: #333;
-                        padding: 40px;
-                    }
-                    .container {
-                        max-width: 900px;
-                        margin: 0 auto;
-                    }
-                    header {
-                        border-bottom: 3px solid #C41230;
-                        margin-bottom: 30px;
-                        padding-bottom: 10px;
-                    }
-                    h1 {
-                        color: #C41230;
-                        font-size: 24pt;
-                        text-transform: uppercase;
-                        letter-spacing: 1px;
-                    }
-                    .project-meta {
-                        margin-bottom: 40px;
-                        background: #f8f9fa;
-                        padding: 20px;
-                    }
-                    .section {
-                        margin-bottom: 30px;
-                    }
-                    .section-title {
-                        font-size: 14pt;
-                        color: #C41230;
-                        border-bottom: 1px solid #dee2e6;
-                        margin-bottom: 10px;
-                        padding-bottom: 5px;
-                        font-weight: bold;
-                    }
-                    .question-label {
-                        font-weight: 600;
-                        color: #2c2c2c;
-                        display: block;
-                        margin-bottom: 5px;
-                    }
-                    .instruction-text {
-                        font-size: 0.9em;
-                        color: #666;
-                        font-style: italic;
-                        margin-bottom: 10px;
-                    }
-                    .response-box {
-                        background-color: #fff;
-                        padding: 10px 15px;
-                        border-left: 4px solid #C41230;
-                        margin-bottom: 20px;
-                        min-height: 20px;
-                    }
-                    .file-placeholder {
-                        border: 2px dashed #dee2e6;
-                        padding: 20px;
-                        text-align: center;
-                        color: #666;
-                    }
-                </style>
+                ${styles}
             </head>
             <body>
                 ${this.prepareHtmlForDocx(filledHtml)}
@@ -211,6 +155,17 @@ const Generator = {
         });
 
         return converted;
+    },
+
+    /**
+     * Extract <style> block from HTML content
+     * @param {string} html 
+     * @returns {string} - The style block including <style> tags
+     */
+    extractStyles(html) {
+        if (!html) return '';
+        const match = html.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
+        return match ? match[0] : '';
     },
 
     /**
@@ -256,6 +211,20 @@ const Generator = {
             .replace(/\s+/g, '_')
             .substring(0, 50);
         return `${sanitized}_Specification.docx`;
+    },
+
+    /**
+     * Generate single document from a row
+     * @param {Object} row 
+     * @param {number} index 
+     * @returns {Promise<{filename: string, blob: Blob}>}
+     */
+    async generateSingle(row, index) {
+        const filledHtml = this.fillTemplate(row);
+        const docxBlob = this.generateDocx(filledHtml);
+        const filename = this.generateFilename(row, index);
+
+        return { filename, blob: docxBlob };
     },
 
     /**

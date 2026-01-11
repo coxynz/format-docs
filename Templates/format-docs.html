@@ -6,21 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vega NZ - Needs Analysis</title>
     <style>
-        :root {
-            --primary-color: #C41230;
-            --secondary-color: #2c2c2c;
-            --accent-color: #C41230;
-            --bg-light: #f8f9fa;
-            --border-color: #dee2e6;
-            --text-main: #333;
-            --text-muted: #666;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: var(--text-main);
-            background-color: #fff;
+            color: #333333;
+            background-color: #ffffff;
             margin: 0;
             padding: 40px;
         }
@@ -28,24 +18,30 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
-            border: 1px solid var(--border-color);
+            border: 1px solid #dee2e6;
             padding: 50px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
         }
 
         header {
-            border-bottom: 3px solid var(--primary-color);
+            border-bottom: 3px solid #C41230;
             margin-bottom: 30px;
             padding-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .header-table td {
+            vertical-align: middle;
+        }
+
+        .logo-cell {
+            width: 1%;
+            white-space: nowrap;
+            padding-right: 20px;
         }
 
         .logo {
@@ -54,21 +50,25 @@
         }
 
         h1 {
-            color: var(--primary-color);
+            color: #C41230;
             margin: 0;
             font-size: 20pt;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .project-meta {
+        /* Table-based layout for DOCX compatibility */
+        .project-meta-table {
+            width: 100%;
             margin-bottom: 40px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            background: var(--bg-light);
+            background: #f8f9fa;
+            border-collapse: collapse;
+        }
+
+        .project-meta-table td {
             padding: 20px;
-            border-radius: 4px;
+            vertical-align: top;
+            width: 50%;
         }
 
         .section {
@@ -77,8 +77,8 @@
 
         .section-title {
             font-size: 14pt;
-            color: var(--primary-color);
-            border-bottom: 1px solid var(--border-color);
+            color: #C41230;
+            border-bottom: 1px solid #dee2e6;
             margin-bottom: 10px;
             padding-bottom: 5px;
             font-weight: bold;
@@ -88,12 +88,12 @@
             font-weight: 600;
             display: block;
             margin-bottom: 5px;
-            color: var(--secondary-color);
+            color: #2c2c2c;
         }
 
         .instruction-text {
             font-size: 0.9em;
-            color: var(--text-muted);
+            color: #666666;
             font-style: italic;
             margin-bottom: 10px;
             display: block;
@@ -102,7 +102,7 @@
         .response-box {
             background-color: #fff;
             padding: 10px 15px;
-            border-left: 4px solid var(--accent-color);
+            border-left: 4px solid #C41230;
             margin-bottom: 20px;
             min-height: 20px;
             white-space: pre-wrap;
@@ -110,10 +110,10 @@
         }
 
         .file-placeholder {
-            border: 2px dashed var(--border-color);
+            border: 2px dashed #dee2e6;
             padding: 20px;
             text-align: center;
-            color: var(--text-muted);
+            color: #666666;
             border-radius: 4px;
         }
 
@@ -140,23 +140,33 @@
 
     <div class="container">
         <header>
-            <div class="header-left">
-                <img src="Images/VEGA-logo_with-slogan-removebg-preview.png" alt="Vega Logo" class="logo">
-                <h1>Vega NZ - Needs Analysis</h1>
-            </div>
+            <table class="header-table">
+                <tr>
+                    <td class="logo-cell">
+                        <img src="Images/VEGA-logo_with-slogan-removebg-preview.png" alt="Vega Logo" width="135"
+                            height="85" style="width: 135px; height: 85px; display: block;">
+                    </td>
+                    <td>
+                        <h1>Vega NZ - Needs Analysis</h1>
+                    </td>
+                </tr>
+            </table>
         </header>
 
         <!-- 1. Client & 2. Date -->
-        <div class="project-meta">
-            <div>
-                <span class="question-label">Client / Project Name:</span>
-                <div class="response-box">[INSERT_CLIENT_NAME]</div>
-            </div>
-            <div>
-                <span class="question-label">Desired Completion Date:</span>
-                <div class="response-box">[INSERT_DATE]</div>
-            </div>
-        </div>
+        <!-- Use Table for Layout -->
+        <table class="project-meta-table">
+            <tr>
+                <td>
+                    <span class="question-label">Client / Project Name:</span>
+                    <div class="response-box">[INSERT_CLIENT_NAME]</div>
+                </td>
+                <td>
+                    <span class="question-label">Desired Completion Date:</span>
+                    <div class="response-box">[INSERT_DATE]</div>
+                </td>
+            </tr>
+        </table>
 
         <!-- 3. Room Details -->
         <div class="section">

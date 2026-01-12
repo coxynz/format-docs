@@ -134,8 +134,35 @@ const Generator = {
      */
     generateFilename(row, index) {
         const clientName = row['Client'] || `Document_${index + 1}`;
-        const sanitized = clientName.replace(/[^a-zA-Z0-9\s\-_]/g, '').replace(/\s+/g, '_').substring(0, 50);
-        return `${sanitized}_Specification.docx`;
+        const cleanClientName = clientName.replace(/[^a-zA-Z0-9\s\-_]/g, '').trim();
+
+        // Handle Date
+        let dateStr = row['Desired Completion Date'] || '';
+        let formattedDate = '';
+
+        // Try to parse date if it's not empty
+        if (dateStr) {
+            const date = new Date(dateStr);
+            if (!isNaN(date.getTime())) {
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                formattedDate = `${day}-${month}-${year}`;
+            } else {
+                // If parse fails, just use the string but replace slashes
+                formattedDate = dateStr.replace(/\//g, '-').replace(/[^a-zA-Z0-9\-]/g, '');
+            }
+        }
+
+        if (!formattedDate) {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            formattedDate = `${day}-${month}-${year}`;
+        }
+
+        return `${cleanClientName} - Needs Analysis - ${formattedDate}.docx`;
     },
 
     /**

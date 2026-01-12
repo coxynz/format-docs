@@ -37,7 +37,7 @@ const Preview = {
         }
 
         const row = this.rows[this.currentIndex];
-        const filledHtml = Generator.fillTemplate(row);
+        const filledHtml = Generator.fillHtmlTemplate(row);
 
         // Write to iframe
         const doc = this.iframe.contentDocument || this.iframe.contentWindow.document;

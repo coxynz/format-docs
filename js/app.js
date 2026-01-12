@@ -106,11 +106,21 @@ const App = {
      */
     async loadTemplate() {
         try {
-            await Generator.loadTemplate('Templates/format-docs.html');
+            // Load HTML for Preview
+            await Generator.loadHtmlTemplate('Templates/format-docs.html');
+
+            // Load DOCX for Generation
+            const docxLoaded = await Generator.loadDocxTemplate('Templates/template.docx');
+
+            if (!docxLoaded) {
+                // Warning if template.docx is missing
+                this.showToast('Templates/template.docx not found. Generation will fail until created.', 'warning');
+            }
+
             this.templateLoaded = true;
         } catch (error) {
-            console.error('Failed to load template:', error);
-            this.showToast('Failed to load template. Please refresh the page.', 'error');
+            console.error('Failed to load templates:', error);
+            this.showToast('Failed to load templates. Please refresh.', 'error');
         }
     },
 
